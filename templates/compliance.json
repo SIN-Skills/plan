@@ -1,0 +1,149 @@
+{
+  "$schema": "https://opencode.ai/schemas/plan-v2.json",
+  "version": "2.1.0",
+  "id": "plan_YYYY-MM-DD_NNN",
+  "title": "Compliance Plan Template",
+  "mode": "plan-only",
+  "created": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "version_number": 1,
+  "status": "draft",
+  "approval_gate": true,
+  "compliance": [
+    "iso27001",
+    "sox",
+    "itil"
+  ],
+  "outcomes": {
+    "objective": "Close a control gap with traceable evidence.",
+    "key_results": [
+      {
+        "metric": "control_coverage",
+        "target": "100%",
+        "current": "0%"
+      },
+      {
+        "metric": "auditability",
+        "target": "complete",
+        "current": "baseline"
+      }
+    ]
+  },
+  "current_state": {
+    "strengths": [],
+    "weaknesses": [],
+    "critical_gaps": []
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Assess",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Map the control gap",
+          "effort": {
+            "pessimistic": "4h",
+            "realistic": "2h",
+            "optimistic": "1h"
+          },
+          "dependencies": [],
+          "validation": "Gap list is complete and reviewable.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Remediate",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Apply the remediation with evidence",
+          "effort": {
+            "pessimistic": "8h",
+            "realistic": "4h",
+            "optimistic": "2h"
+          },
+          "dependencies": [
+            "P1-T1"
+          ],
+          "validation": "Evidence exists for the remediation.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "nodes": [
+      "P1-T1",
+      "P2-T1"
+    ],
+    "edges": [
+      {
+        "from": "P1-T1",
+        "to": "P2-T1",
+        "type": "hard"
+      }
+    ],
+    "critical_path": [
+      "P1-T1",
+      "P2-T1"
+    ]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Evidence is incomplete.",
+      "likelihood": 0.3,
+      "impact": 8,
+      "score": 2.4,
+      "mitigation": "Store audit artifacts with every change.",
+      "owner": "engineer",
+      "status": "identified"
+    }
+  ],
+  "overall_risk_score": 24,
+  "plan_quality_score": 0,
+  "rollback_plan": {
+    "trigger": "The remediation fails audit review.",
+    "action": "Revert to the last approved baseline and re-plan.",
+    "max_loss": "Controlled rollback only."
+  },
+  "done_criteria": [
+    {
+      "criterion": "Control gap mapped",
+      "status": "not-met"
+    },
+    {
+      "criterion": "Evidence captured",
+      "status": "not-met"
+    }
+  ],
+  "approvals": [
+    {
+      "role": "tech-lead",
+      "status": "pending",
+      "date": null
+    }
+  ],
+  "metrics": {
+    "planned_duration_hours": 0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  }
+}

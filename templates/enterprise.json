@@ -1,0 +1,219 @@
+{
+  "$schema": "https://opencode.ai/schemas/plan-v2.json",
+  "version": "2.1.0",
+  "id": "plan_YYYY-MM-DD_NNN",
+  "title": "Enterprise Plan Template",
+  "mode": "plan-and-execute",
+  "created": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "version_number": 1,
+  "status": "draft",
+  "approval_gate": true,
+  "outcomes": {
+    "objective": "Deliver a safe enterprise change with measurable outcomes and rollback coverage.",
+    "key_results": [
+      {
+        "metric": "outcome_coverage",
+        "target": "100%",
+        "current": "0%"
+      },
+      {
+        "metric": "quality_score",
+        "target": ">=70",
+        "current": "0"
+      },
+      {
+        "metric": "risk_score",
+        "target": "<=60",
+        "current": "0"
+      }
+    ]
+  },
+  "current_state": {
+    "strengths": [],
+    "weaknesses": [],
+    "critical_gaps": []
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Critical Path",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Define the smallest safe deliverable",
+          "effort": {
+            "pessimistic": "4h",
+            "realistic": "2h",
+            "optimistic": "1h"
+          },
+          "dependencies": [],
+          "validation": "Deliverable is explicit and testable.",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T2",
+          "description": "Build the machine-readable contract",
+          "effort": {
+            "pessimistic": "8h",
+            "realistic": "4h",
+            "optimistic": "2h"
+          },
+          "dependencies": [
+            "P1-T1"
+          ],
+          "validation": "Schema and command contract are deterministic.",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T3",
+          "description": "Prove validation, DAG, and Monte Carlo outputs",
+          "effort": {
+            "pessimistic": "8h",
+            "realistic": "4h",
+            "optimistic": "2h"
+          },
+          "dependencies": [
+            "P1-T2"
+          ],
+          "validation": "Tests cover all core runtime outputs.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Governance and Packaging",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Add approvals, audit, rollback, and drift control",
+          "effort": {
+            "pessimistic": "8h",
+            "realistic": "4h",
+            "optimistic": "2h"
+          },
+          "dependencies": [
+            "P1-T3"
+          ],
+          "validation": "Audit records and rollback snapshots are generated.",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P2-T2",
+          "description": "Ship packaging, CI, and release automation",
+          "effort": {
+            "pessimistic": "6h",
+            "realistic": "3h",
+            "optimistic": "1h"
+          },
+          "dependencies": [
+            "P2-T1"
+          ],
+          "validation": "Build, test, and release workflows pass in CI.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "nodes": [
+      "P1-T1",
+      "P1-T2",
+      "P1-T3",
+      "P2-T1",
+      "P2-T2"
+    ],
+    "edges": [
+      {
+        "from": "P1-T1",
+        "to": "P1-T2",
+        "type": "hard"
+      },
+      {
+        "from": "P1-T2",
+        "to": "P1-T3",
+        "type": "hard"
+      },
+      {
+        "from": "P1-T3",
+        "to": "P2-T1",
+        "type": "hard"
+      },
+      {
+        "from": "P2-T1",
+        "to": "P2-T2",
+        "type": "hard"
+      }
+    ],
+    "critical_path": [
+      "P1-T1",
+      "P1-T2",
+      "P1-T3",
+      "P2-T1",
+      "P2-T2"
+    ]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Scope expands beyond the smallest safe deliverable.",
+      "likelihood": 0.4,
+      "impact": 7,
+      "score": 2.8,
+      "mitigation": "Keep phase 1 small and measurable.",
+      "owner": "tech-lead",
+      "status": "identified"
+    }
+  ],
+  "overall_risk_score": 28,
+  "plan_quality_score": 0,
+  "rollback_plan": {
+    "trigger": "Validation fails, drift is detected, or governance gate blocks execution.",
+    "action": "Restore the last approved snapshot and re-validate.",
+    "max_loss": "One iteration of planning work."
+  },
+  "done_criteria": [
+    {
+      "criterion": "Plan is valid",
+      "status": "not-met"
+    },
+    {
+      "criterion": "Execution is deterministic",
+      "status": "not-met"
+    },
+    {
+      "criterion": "Rollback is available",
+      "status": "not-met"
+    }
+  ],
+  "approvals": [
+    {
+      "role": "tech-lead",
+      "status": "pending",
+      "date": null
+    }
+  ],
+  "metrics": {
+    "planned_duration_hours": 0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  }
+}
