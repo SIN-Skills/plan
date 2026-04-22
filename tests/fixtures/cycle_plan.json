@@ -1,0 +1,187 @@
+{
+  "$schema": null,
+  "version": "2.1.0",
+  "id": "plan_2026-04-22_001",
+  "title": "Cycle Fixture",
+  "mode": "plan-and-execute",
+  "created": "2026-04-22",
+  "updated": "2026-04-22",
+  "version_number": 1,
+  "status": "draft",
+  "approval_gate": true,
+  "compliance": [],
+  "outcomes": {
+    "objective": "Validate the agent-first plan pipeline.",
+    "key_results": [
+      {
+        "metric": "quality_score",
+        "target": ">=70",
+        "current": "0"
+      },
+      {
+        "metric": "risk_score",
+        "target": "<=60",
+        "current": "0"
+      }
+    ]
+  },
+  "current_state": {
+    "strengths": [
+      "Existing plan skill"
+    ],
+    "weaknesses": [
+      "No package CLI"
+    ],
+    "critical_gaps": [
+      "No deterministic runtime"
+    ]
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Package",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Create the package scaffold",
+          "effort": {
+            "pessimistic": "4h",
+            "realistic": "2h",
+            "optimistic": "1h"
+          },
+          "dependencies": [
+            "P2-T1"
+          ],
+          "validation": "CLI entrypoint exists.",
+          "owner": "engineer",
+          "status": "not-started"
+        },
+        {
+          "id": "P1-T2",
+          "description": "Wire validation and DAG analysis",
+          "effort": {
+            "pessimistic": "6h",
+            "realistic": "3h",
+            "optimistic": "1h"
+          },
+          "dependencies": [
+            "P1-T1"
+          ],
+          "validation": "Validation returns JSON with quality scoring.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Governance",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Add approvals and audit logs",
+          "effort": {
+            "pessimistic": "4h",
+            "realistic": "2h",
+            "optimistic": "1h"
+          },
+          "dependencies": [
+            "P1-T2"
+          ],
+          "validation": "Approval and audit artifacts are generated.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "tasks": [],
+  "dependency_graph": {
+    "nodes": [
+      "P1-T1",
+      "P1-T2",
+      "P2-T1"
+    ],
+    "edges": [
+      {
+        "from": "P1-T1",
+        "to": "P1-T2",
+        "type": "hard"
+      },
+      {
+        "from": "P1-T2",
+        "to": "P2-T1",
+        "type": "hard"
+      },
+      {
+        "from": "P2-T1",
+        "to": "P1-T1",
+        "type": "hard"
+      }
+    ],
+    "critical_path": [
+      "P1-T1",
+      "P1-T2",
+      "P2-T1"
+    ]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "description": "Execution diverges from approved plan.",
+      "likelihood": 0.2,
+      "impact": 7.0,
+      "score": 1.4,
+      "mitigation": "Use drift detection and rollback.",
+      "owner": "engineer",
+      "status": "identified"
+    }
+  ],
+  "overall_risk_score": 14.0,
+  "plan_quality_score": 0.0,
+  "rollback_plan": {
+    "trigger": "Drift or failed validation",
+    "action": "Rollback to last snapshot",
+    "max_loss": "Small"
+  },
+  "rollback_policy": null,
+  "done_criteria": [
+    {
+      "criterion": "Package scaffold exists",
+      "status": "not-met"
+    },
+    {
+      "criterion": "Validation passes",
+      "status": "not-met"
+    },
+    {
+      "criterion": "Audit trail exists",
+      "status": "not-met"
+    }
+  ],
+  "approvals": [
+    {
+      "role": "tech-lead",
+      "status": "pending",
+      "date": null
+    }
+  ],
+  "metrics": {
+    "planned_duration_hours": 0.0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  },
+  "schema_": "https://opencode.ai/schemas/plan-v2.json"
+}
