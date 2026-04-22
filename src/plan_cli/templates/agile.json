@@ -1,0 +1,127 @@
+{
+  "$schema": "https://opencode.ai/schemas/plan-v2.json",
+  "version": "2.1.0",
+  "id": "plan_YYYY-MM-DD_NNN",
+  "title": "Agile Plan Template",
+  "mode": "continuous-planning",
+  "created": "YYYY-MM-DD",
+  "updated": "YYYY-MM-DD",
+  "version_number": 1,
+  "status": "draft",
+  "approval_gate": false,
+  "outcomes": {
+    "objective": "Ship a small validated improvement quickly.",
+    "key_results": [
+      {
+        "metric": "cycle_time",
+        "target": "short",
+        "current": "baseline"
+      },
+      {
+        "metric": "quality_score",
+        "target": ">=70",
+        "current": "0"
+      }
+    ]
+  },
+  "current_state": {
+    "strengths": [],
+    "weaknesses": [],
+    "critical_gaps": []
+  },
+  "decisions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Build",
+      "priority": "critical",
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "description": "Implement the smallest useful slice",
+          "effort": {
+            "pessimistic": "6h",
+            "realistic": "3h",
+            "optimistic": "1h"
+          },
+          "dependencies": [],
+          "validation": "Feature works end to end.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Verify and Adapt",
+      "priority": "high",
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "description": "Verify the change and update the plan if needed",
+          "effort": {
+            "pessimistic": "4h",
+            "realistic": "2h",
+            "optimistic": "1h"
+          },
+          "dependencies": [
+            "P1-T1"
+          ],
+          "validation": "Smoke tests and checks pass.",
+          "owner": "engineer",
+          "status": "not-started"
+        }
+      ]
+    }
+  ],
+  "dependency_graph": {
+    "nodes": [
+      "P1-T1",
+      "P2-T1"
+    ],
+    "edges": [
+      {
+        "from": "P1-T1",
+        "to": "P2-T1",
+        "type": "hard"
+      }
+    ],
+    "critical_path": [
+      "P1-T1",
+      "P2-T1"
+    ]
+  },
+  "risks": [],
+  "overall_risk_score": 12,
+  "plan_quality_score": 0,
+  "rollback_plan": {
+    "trigger": "The slice regresses or blocks delivery.",
+    "action": "Revert and re-plan with a smaller slice.",
+    "max_loss": "Hours, not days."
+  },
+  "done_criteria": [
+    {
+      "criterion": "Change validated",
+      "status": "not-met"
+    },
+    {
+      "criterion": "Rollback possible",
+      "status": "not-met"
+    }
+  ],
+  "approvals": [],
+  "metrics": {
+    "planned_duration_hours": 0,
+    "confidence_50": "0h",
+    "confidence_85": "0h",
+    "confidence_95": "0h",
+    "scope_creep_count": 0,
+    "replan_count": 0
+  },
+  "learning": {
+    "planned_vs_actual": null,
+    "accuracy_score": null,
+    "retrospective": null
+  }
+}
