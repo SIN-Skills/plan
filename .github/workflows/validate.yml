@@ -1,0 +1,26 @@
+name: Validate plan package
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e .[dev]
+      - run: ruff check src tests
+      - run: mypy src tests scripts
+      - run: pytest -q
+      - run: opencode-plan validate tests/fixtures/valid_plan.json --strict --auto-fix
+      - run: opencode-plan simulate tests/fixtures/valid_plan.json --iterations 1000
+      - run: opencode-plan schema --target plan
