@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 from typer.testing import CliRunner
 
@@ -12,7 +13,7 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 runner = CliRunner()
 
 
-def parse_json_output(output: str) -> dict[str, object]:
+def parse_json_output(output: str) -> dict[str, Any]:
     start = output.find("{")
     if start == -1:
         raise AssertionError(f"JSON output not found: {output!r}")
